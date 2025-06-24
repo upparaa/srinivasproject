@@ -23,8 +23,8 @@ jobs:
       - name: Run tests with Maven
         run: mvn clean test
 
-      - name: Debug: Check Surefire Reports
-        run: ls -R target/surefire-reports || echo "❌ surefire-reports not found"
+      - name: Debug: List surefire-reports
+        run: ls -R target/surefire-reports || echo "No surefire reports found"
 
       - name: Upload Surefire Report
         if: always()
