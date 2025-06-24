@@ -1,4 +1,4 @@
-name: Maven Build with HTML Report
+name: Maven Build with Surefire Report
 
 on:
   push:
@@ -20,18 +20,16 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Run tests and generate HTML report
-        run: |
-          mvn clean test
-          mvn surefire-report:report-only site
+      - name: Run tests with Maven
+        run: mvn clean test
 
-      - name: Debug: Show HTML report location
-        run: ls -R target/site
+      - name: Debug: Check Surefire Reports
+        run: ls -R target/surefire-reports || echo "❌ surefire-reports not found"
 
-      - name: Upload HTML Report
+      - name: Upload Surefire Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: html-test-report
-          path: target/site/
+          name: surefire-report
+          path: target/surefire-reports/
           if-no-files-found: warn
